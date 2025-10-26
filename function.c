@@ -27,6 +27,8 @@ void displayMenu() {
 
 
 
+
+
 //==============================Start: View Product
 void viewProduct() {
 	
@@ -42,8 +44,8 @@ void viewProduct() {
 	}
 	
 }
-
 //==============================End: View Product
+
 
 
 
@@ -79,21 +81,19 @@ void addProduct() {
 
 
 
+
+
 //==============================Start: Edit Product
 void editProduct() {
-	
 	printf("\n\t=== Edit product ===\n");
-	
 	printf("\n\tPlease input ID of Product: "); 
 	
 	char productIdToEdit[15];
 	scanf("%s", productIdToEdit);
 	
 	int found = 0;
-	
 	for(int i = 0; i < numProducts; i++) {
 		if(strcmp(productIdToEdit, products[i].id) == 0) {
-			
 			found = 1;
 			
 			printf("\n\tInput ID: ");
@@ -112,10 +112,8 @@ void editProduct() {
 			scanf("%f", &products[i].unitPrice);
 			
 			break;
-			
 		}
 	}
-	
 	if(found == 1) {
 		printf("\n\tProduct was edited successfully!!!");
 	}
@@ -123,11 +121,10 @@ void editProduct() {
 		printf("\n\tNo Product Found!!!");
 	}
 	
-	
 }
-
-
 //==============================End: Edit Product
+
+
 
 
 
@@ -170,7 +167,9 @@ void deleteProduct() {
 
 
 
+
 //==============================Start: Search Product
+
 void searchProduct() {
 	
 	printf("\n\t=== Search product ===\n");
@@ -201,6 +200,7 @@ void searchProduct() {
 	}
 	
 }
+
 //==============================End: Search Product
 
 
@@ -208,10 +208,35 @@ void searchProduct() {
 
 
 //==============================Start: Sort Product
+
 void sortProduct() {
+	
+	printf("\n\t=== Sort product by Product's Name ===\n");
+	
+	Product temp;
+	
+	for(int i = 0; i < numProducts - 1; i++) {
+		for(int j = i + 1; j < numProducts; j++) {
+			if(strcmp(products[j].name, products[i].name) < 0) {
+				temp = products[i];
+				products[i] = products[j];
+				products[j] = temp;
+			}
+		}
+	}
+	
+	printf("\n\tProducts were sorted successfully!!!");
 	
 }
 
 //==============================End: Sort Product
+
+
+
+
+
+
+
+
 
 
