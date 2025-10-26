@@ -6,6 +6,7 @@ int main() {
 	int choice;
 	
 	do {
+
 		displayMenu();
 		
 		printf("\tEnter your choice (0-6): ");
@@ -41,19 +42,12 @@ int main() {
 				printf("\n\tThank you for using this system!!!\n");
 				break;
 			default:
-			
 				printf("\n\tInvalid input! Please enter a number between 0 and 6!!!\n");
 				break;
-				
 		}
-		
 		
 	} while (choice != 0);
 	
-
-	
-	
-	
-	
 	return 0;
+	
 }
