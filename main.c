@@ -3,6 +3,8 @@
 
 int main() {
 	
+	numProducts = loadFromFile(products, filename);
+	
 	int choice;
 	
 	do {
@@ -38,6 +40,7 @@ int main() {
 				sortProduct();
 				break;
 			case 0:
+				saveToFile(products, filename);
 				system("cls");
 				printf("\n\tThank you for using this system!!!\n");
 				break;

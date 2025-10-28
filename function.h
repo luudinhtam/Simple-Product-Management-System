@@ -18,6 +18,8 @@ typedef struct {
 } Product;
 
 // Macro definition
+
+extern const char *filename;
 		
 extern Product products[500];
 
@@ -33,6 +35,12 @@ void editProduct();
 void deleteProduct();
 void searchProduct();
 void sortProduct();
+
+//Lưu cái gì và Lưu ở đâu
+void saveToFile(Product products[], const char *filename);
+int loadFromFile(Product products[], const char *filename);
+
+
 
 
 #endif

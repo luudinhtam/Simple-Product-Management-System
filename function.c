@@ -2,6 +2,9 @@
 
 //Declaration
 
+const char *filename = "data.txt";
+
+
 Product products[500];
 
 int numProducts = 0;
@@ -24,6 +27,55 @@ void displayMenu() {
 }
 
 //==============================End: Menu
+
+
+
+
+
+//==============================Start: Load from File
+
+int loadFromFile(Product products[], const char *filename) {
+	FILE *file = fopen(filename, "r");
+	
+	if(file == NULL) {
+		printf("\n\t Error loading from file!!!");
+	}
+	
+	int count = 0;
+	
+	while (fscanf(file, "%s %s %s %d %f\n", products[count].id, products[count].name, products[count].category, &products[count].quantity, &products[count].unitPrice) == 5) {                  
+		count = count + 1;
+	}
+	
+	fclose(file);
+	
+	return count;
+}
+
+//==============================End: Load from File
+
+
+
+
+//==============================Start: Save to File
+
+void saveToFile(Product products[], const char *filename) {
+	FILE *file = fopen(filename, "w");
+	
+	if(file == NULL) {
+		printf("\n\t Error saving to file!!!");
+	}
+	
+	for(int i = 0; i < numProducts; i++) {
+		
+		fprintf(file, "%s %s %s %d %.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
+		
+	}
+	
+	fclose(file);
+}
+
+//==============================End: Save to File
 
 
 
@@ -74,6 +126,7 @@ void addProduct() {
 	numProducts = numProducts + 1;
 	
 	printf("\n\tProduct was added successfully!!!\n");
+
 	
 }
 
