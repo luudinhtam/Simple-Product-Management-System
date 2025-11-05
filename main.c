@@ -8,7 +8,6 @@ int main() {
 	int choice;
 	
 	do {
-
 		displayMenu();
 		
 		printf("\tEnter your choice (0-6): ");
@@ -40,8 +39,8 @@ int main() {
 				sortProduct();
 				break;
 			case 0:
-				saveToFile(products, filename);
 				system("cls");
+				saveToFile(products, filename);
 				printf("\n\tThank you for using this system!!!\n");
 				break;
 			default:

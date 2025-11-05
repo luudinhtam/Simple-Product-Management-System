@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <ctype.h>
 #include <string.h>
 
 //Structure definition
 
 typedef struct {
-	char id[15];
+	char id[10];
 	char name[50];
 	char category[50];
 	int quantity;
@@ -21,7 +22,7 @@ typedef struct {
 
 extern const char *filename;
 		
-extern Product products[500];
+extern Product products[];
 
 extern int numProducts;
 
@@ -36,11 +37,7 @@ void deleteProduct();
 void searchProduct();
 void sortProduct();
 
-//Lưu cái gì và Lưu ở đâu
 void saveToFile(Product products[], const char *filename);
 int loadFromFile(Product products[], const char *filename);
-
-
-
 
 #endif

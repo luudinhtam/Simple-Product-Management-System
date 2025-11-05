@@ -4,16 +4,16 @@
 
 const char *filename = "data.txt";
 
-
-Product products[500];
+Product products[1000];
 
 int numProducts = 0;
 
 //==============================Start: Menu
+
 void displayMenu() {
 	
 	printf("\n\t======================================\n");
-    printf("\t## PRODUCT MANAGEMENT SYSTEM ##\n");
+    printf("\t### PRODUCT MANAGEMENT SYSTEM ###\n");
     printf("\t======================================\n");
     printf("\n\t[1] View Product\n");
     printf("\t[2] Add Product\n");
@@ -21,7 +21,7 @@ void displayMenu() {
     printf("\t[4] Delete Product\n");
     printf("\t[5] Search Product\n");
     printf("\t[6] Sort Product\n");
-    printf("\t[0] Exit\n");
+    printf("\t[0] Save and Exit\n");
     printf("\n\t======================================\n");
 	
 }
@@ -38,12 +38,13 @@ int loadFromFile(Product products[], const char *filename) {
 	FILE *file = fopen(filename, "r");
 	
 	if(file == NULL) {
-		printf("\n\t Error loading from file!!!");
+		perror("\n\tError loading from file! ");
+		return 0;
 	}
 	
 	int count = 0;
 	
-	while (fscanf(file, "%s %s %s %d %f\n", products[count].id, products[count].name, products[count].category, &products[count].quantity, &products[count].unitPrice) == 5) {                  
+	while (fscanf(file, "%9[^,], %49[^,], %49[^,], %d, %f\n", products[count].id, products[count].name, products[count].category, &products[count].quantity, &products[count].unitPrice) == 5) {                  
 		count = count + 1;
 	}
 	
@@ -63,18 +64,21 @@ void saveToFile(Product products[], const char *filename) {
 	FILE *file = fopen(filename, "w");
 	
 	if(file == NULL) {
-		printf("\n\t Error saving to file!!!");
+		perror("\n\tError saving to file! ");
+		return;
 	}
 	
 	for(int i = 0; i < numProducts; i++) {
 		
-		fprintf(file, "%s %s %s %d %.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
+		fprintf(file, "%s, %s, %s, %d, %.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
 		
 	}
 	
 	fclose(file);
+	
+	printf("\n\tProducts data was saved successfully!!!\n");
+	
 }
-
 //==============================End: Save to File
 
 
@@ -87,12 +91,18 @@ void viewProduct() {
 	printf("\n\t=== View product ===\n");
 	
 	if(numProducts == 0) {
-		printf("\n\tNo Product Found!!!");	
+		printf("\n\tNo Product Found!!!");
 	}
 	else {
+		
+		printf("\n\t%-10s  %-20s  %-20s  %-20s  %-20s\n", "ID", "Name", "Category", "Quantity", "Unit Price");
+		printf("\t=========================================================================================");
+		
 		for(int i = 0; i < numProducts; i++) {
-			printf("\n\t%s %s %s %d %.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);       
+			printf("\n\t%-10s  %-20s  %-20s  %-20d  $%-20.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);       
+			
 		}
+		printf("\t=========================================================================================\n");
 	}
 	
 }
@@ -103,31 +113,53 @@ void viewProduct() {
 
 
 //==============================Start: Add Product
-
 void addProduct() {
-	
 	printf("\n\t=== Add product ===\n");
 	
+	char tempId[1000];
+	char tempName[1000];
+	char tempCategory[1000];
+	
 	printf("\n\tInput ID: ");
-	scanf("%s", products[numProducts].id);
-	
+	scanf("\n");
+	gets(tempId);
+	if(strlen(tempId) > 9) {
+		printf("\n\tInvalid input\n");
+		return;
+	}
+			
 	printf("\tInput Name: ");
-	scanf("%s", products[numProducts].name);
-	    
+	scanf("\n");
+	gets(tempName);
+	if(strlen(tempName) > 49) {
+		printf("\n\tInvalid input\n");
+		return;
+	}
+		
 	printf("\tInput Category: ");
-	scanf("%s", products[numProducts].category);
+	scanf("\n");
+	gets(tempCategory);
+	if(strlen(tempCategory) > 49) {
+		printf("\n\tInvalid input\n");
+		return;
+	}
 	
+	tempName[0] = toupper(tempName[0]);
+	tempCategory[0] = toupper(tempCategory[0]);
+	
+	strcpy(products[numProducts].id, tempId);
+	strcpy(products[numProducts].name, tempName);
+	strcpy(products[numProducts].category, tempCategory);
+			
 	printf("\tInput Quantity: ");
 	scanf("%d", &products[numProducts].quantity);
-	
 	printf("\tInput Unit Price: ");
 	scanf("%f", &products[numProducts].unitPrice);
 	
 	numProducts = numProducts + 1;
-	
 	printf("\n\tProduct was added successfully!!!\n");
-
 	
+	saveToFile(products, filename);
 }
 
 //==============================End: Add Product
@@ -138,42 +170,73 @@ void addProduct() {
 
 //==============================Start: Edit Product
 void editProduct() {
+	
+	viewProduct();
+	
 	printf("\n\t=== Edit product ===\n");
 	printf("\n\tPlease input ID of Product: "); 
 	
-	char productIdToEdit[15];
-	scanf("%s", productIdToEdit);
+	char productIdToEdit[10];
+	scanf("%9s", productIdToEdit);
 	
 	int found = 0;
 	for(int i = 0; i < numProducts; i++) {
 		if(strcmp(productIdToEdit, products[i].id) == 0) {
 			found = 1;
 			
-			printf("\n\tInput ID: ");
-			scanf("%s", products[i].id);
+			char tempId[1000];
+			char tempName[1000];
+			char tempCategory[1000];
+	
 			
-			printf("\tInput Name: ");
-			scanf("%s", products[i].name);
-			    
-			printf("\tInput Category: ");
-			scanf("%s", products[i].category);
+			printf("\n\tInput new ID: ");
+			scanf("\n");
+			gets(tempId);
+			if(strlen(tempId) > 9) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
 			
-			printf("\tInput Quantity: ");
+			printf("\tInput new Name: ");
+			scanf("\n");
+			gets(tempName);
+			if(strlen(tempName) > 49) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
+			
+			printf("\tInput new Category: ");
+			scanf("\n");
+			gets(tempCategory);
+			if(strlen(tempCategory) > 49) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
+			
+			tempName[0] = toupper(tempName[0]);
+			tempCategory[0] = toupper(tempCategory[0]);
+			
+			strcpy(products[i].id, tempId);
+			strcpy(products[i].name, tempName);
+			strcpy(products[i].category, tempCategory);
+			
+			printf("\tInput new Quantity: ");
 			scanf("%d", &products[i].quantity);
 			
-			printf("\tInput Unit Price: ");
+			printf("\tInput new Unit Price: ");
 			scanf("%f", &products[i].unitPrice);
 			
 			break;
 		}
 	}
+	
 	if(found == 1) {
-		printf("\n\tProduct was edited successfully!!!");
+		printf("\n\tProduct was edited successfully!!!\n");
 	}
 	else {
-		printf("\n\tNo Product Found!!!");
+		printf("\n\tNo Product Found!!!\n");
 	}
-	
+	saveToFile(products, filename);
 }
 //==============================End: Edit Product
 
@@ -184,12 +247,14 @@ void editProduct() {
 //==============================Start: Delete Product
 void deleteProduct() {
 	
+	viewProduct();
+	
 	printf("\n\t=== Delete product ===\n");
 	
 	printf("\n\tPlease input ID of Product: ");
 	
-	char productIdToDelete[15];
-	scanf("%s", productIdToDelete);
+	char productIdToDelete[10];
+	scanf("%9s", productIdToDelete);
 	
 	int foundIndex = -1;
 	
@@ -201,7 +266,7 @@ void deleteProduct() {
 	}
 	
 	if(foundIndex == -1) {
-		printf("\n\tNo Product Found!!!");
+		printf("\n\tNo Product Found!!!\n");
 	}
 	else {
 		for(int i = foundIndex; i < numProducts - 1; i++) {
@@ -212,6 +277,7 @@ void deleteProduct() {
 		printf("\n\tProduct was deleted successfully!!!\n");
 	}
 	
+	saveToFile(products, filename);
 
 }
 
@@ -229,8 +295,8 @@ void searchProduct() {
 	
 	printf("\n\tPlease input ID of Product: ");
 	
-	char productIdToSearch[15];
-	scanf("%s", productIdToSearch);
+	char productIdToSearch[10];
+	scanf("%9s", productIdToSearch);
 	
 	int found = 0;
 	
@@ -239,17 +305,20 @@ void searchProduct() {
 			
 			found = 1;
 			
-			printf("\n\t%s %s %s %d %.2f", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
+			printf("\n\t%-10s  %-20s  %-20s  %-20s  %-20s\n", "ID", "Name", "Category", "Quantity", "Unit Price");
+			printf("\t=========================================================================================");
+			printf("\n\t%-10s  %-20s  %-20s  %-20d  $%-20.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
+			printf("\t=========================================================================================\n");
 			
 			break;
 		}
 	}
 	
 	if(found == 1) {
-		printf("\n\tProduct was found successfully!!!");
+		printf("\n\tProduct was found successfully!!!\n");
 	}
 	else {
-		printf("\n\tNo Product Found!!!");
+		printf("\n\tNo Product Found!!!\n");
 	}
 	
 }
@@ -264,7 +333,7 @@ void searchProduct() {
 
 void sortProduct() {
 	
-	printf("\n\t=== Sort product by Product's Name ===\n");
+	printf("\n\t=== Sort product by Product's Name (Ascending Order) ===\n");
 	
 	Product temp;
 	
@@ -278,18 +347,11 @@ void sortProduct() {
 		}
 	}
 	
-	printf("\n\tProducts were sorted successfully!!!");
+	printf("\n\tProducts were sorted successfully!!!\n");
 	
+	saveToFile(products, filename);
+	
+	viewProduct();
 }
 
 //==============================End: Sort Product
-
-
-
-
-
-
-
-
-
-
