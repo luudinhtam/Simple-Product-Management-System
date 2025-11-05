@@ -12,7 +12,7 @@
   
 - User can manage product records, including *viewing, adding, editing, deleting, searching, and sorting products*.
   
-- The project applies structures, arrays of structures, and modular programming for organized and maintainable code.
+- The project applies structures, array of structures, and modular programming for organized and maintainable code.
 
 - The system supports loading and saving data to/from a text file.
 
