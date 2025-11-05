@@ -14,7 +14,7 @@
   
 - The project applies structures, arrays of structures, and modular programming for organized and maintainable code.
 
-- The system supports loading and saving data to/from a text file. (Coming soon 😉)
+- The system supports loading and saving data to/from a text file.
 
 ---
 
