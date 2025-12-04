@@ -24,7 +24,7 @@ int main() {
 				break;
 			case 3:
 				system("cls");
-				editProduct();
+				editProductMenu();
 				break;
 			case 4:
 				system("cls");
@@ -32,16 +32,16 @@ int main() {
 				break;
 			case 5:
 				system("cls");
-				searchProduct();
+				searchProductMenu();
 				break;
 			case 6:
 				system("cls");
-				sortProduct();
+				sortProductMenu();
 				break;
 			case 0:
 				system("cls");
 				saveToFile(products, filename);
-				printf("\n\tThank you for using this system!!!\n");
+				printf("\n\tExit successfully!!!\n");
 				break;
 			default:
 				printf("\n\tInvalid input! Please enter a number between 0 and 6!!!\n");

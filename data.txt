@@ -1,15 +1,16 @@
-1, Organic Vegetables, Orion, 229, 97.71
-2, Coffee Beans, Orion, 368, 106.52
-3, Coffee Powder, Chinsu, 218, 86.33
-4, Soundbar, Logitech, 19, 9152.75
 5, Soundbar, Apple, 50, 18197.70
-6, Green Tea, Twinings, 180, 49.99
-7, Instant Noodles, Samyang, 520, 15.50
-8, Mineral Water, Evian, 300, 21.00
-9, Dark Chocolate, Lindt, 260, 88.88
+4, Soundbar, Logitech, 19, 9152.75
+15, LED Monitor, Dell, 60, 4699.00
+14, Smartwatch, Samsung, 40, 3199.90
+13, Gaming Keyboard, Razer, 95, 1777.77
 10, Headphones, Sony, 75, 1249.00
 11, Mouse, Logitech, 140, 499.99
 12, USB-C Cable, Anker, 360, 129.00
-13, Gaming Keyboard, Razer, 95, 1777.77
-14, Smartwatch, Samsung, 40, 3199.90
-15, LED Monitor, Dell, 60, 4699.00
+2, Coffee Beans, Orion, 368, 106.52
+1, Organic Vegetables, Orion, 229, 97.71
+9, Dark Chocolate, Lindt, 260, 88.88
+3, Coffee Powder, Chinsu, 218, 86.33
+6, Green Tea, Twinings, 180, 49.99
+8, Mineral Water, Evian, 300, 21.00
+7, Instant Noodles, Samyang, 520, 15.50
+21, Kiwi, Fruit, 200, 5.00

@@ -1,4 +1,5 @@
 #include "function.h"
+#include "stdlib.h"
 
 //Declaration
 
@@ -13,7 +14,7 @@ int numProducts = 0;
 void displayMenu() {
 	
 	printf("\n\t======================================\n");
-    printf("\t### PRODUCT MANAGEMENT SYSTEM ###\n");
+    printf("\t### Product Management System ###\n");
     printf("\t======================================\n");
     printf("\n\t[1] View Product\n");
     printf("\t[2] Add Product\n");
@@ -123,7 +124,15 @@ void addProduct() {
 	printf("\n\tInput ID: ");
 	scanf("\n");
 	gets(tempId);
-	if(strlen(tempId) > 9) {
+	if(strlen(tempId) < 10) {
+		for(int i = 0; i < strlen(tempId); i++) {
+			if(!isdigit(tempId[i])) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
+		}
+	}
+	else {
 		printf("\n\tInvalid input\n");
 		return;
 	}
@@ -131,7 +140,15 @@ void addProduct() {
 	printf("\tInput Name: ");
 	scanf("\n");
 	gets(tempName);
-	if(strlen(tempName) > 49) {
+	if(strlen(tempName) < 50) {
+		for(int i = 0; i < strlen(tempName); i++) {
+			if(!isalpha(tempName[i])) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
+		}
+	}
+	else {
 		printf("\n\tInvalid input\n");
 		return;
 	}
@@ -139,7 +156,15 @@ void addProduct() {
 	printf("\tInput Category: ");
 	scanf("\n");
 	gets(tempCategory);
-	if(strlen(tempCategory) > 49) {
+	if(strlen(tempCategory) < 50) {
+		for(int i = 0; i < strlen(tempCategory); i++) {
+			if(!isalpha(tempCategory[i])) {
+				printf("\n\tInvalid input\n");
+				return;
+			}
+		}
+	}
+	else {
 		printf("\n\tInvalid input\n");
 		return;
 	}
@@ -169,7 +194,7 @@ void addProduct() {
 
 
 //==============================Start: Edit Product
-void editProduct() {
+void editProductMenu() {
 	
 	viewProduct();
 	
@@ -179,64 +204,58 @@ void editProduct() {
 	char productIdToEdit[10];
 	scanf("%9s", productIdToEdit);
 	
-	int found = 0;
+	int index = -1;
 	for(int i = 0; i < numProducts; i++) {
 		if(strcmp(productIdToEdit, products[i].id) == 0) {
-			found = 1;
-			
-			char tempId[1000];
-			char tempName[1000];
-			char tempCategory[1000];
-	
-			
-			printf("\n\tInput new ID: ");
-			scanf("\n");
-			gets(tempId);
-			if(strlen(tempId) > 9) {
-				printf("\n\tInvalid input\n");
-				return;
-			}
-			
-			printf("\tInput new Name: ");
-			scanf("\n");
-			gets(tempName);
-			if(strlen(tempName) > 49) {
-				printf("\n\tInvalid input\n");
-				return;
-			}
-			
-			printf("\tInput new Category: ");
-			scanf("\n");
-			gets(tempCategory);
-			if(strlen(tempCategory) > 49) {
-				printf("\n\tInvalid input\n");
-				return;
-			}
-			
-			tempName[0] = toupper(tempName[0]);
-			tempCategory[0] = toupper(tempCategory[0]);
-			
-			strcpy(products[i].id, tempId);
-			strcpy(products[i].name, tempName);
-			strcpy(products[i].category, tempCategory);
-			
-			printf("\tInput new Quantity: ");
-			scanf("%d", &products[i].quantity);
-			
-			printf("\tInput new Unit Price: ");
-			scanf("%f", &products[i].unitPrice);
-			
+			index = i;
 			break;
 		}
 	}
 	
-	if(found == 1) {
-		printf("\n\tProduct was edited successfully!!!\n");
-	}
-	else {
+	if(index == -1) {
 		printf("\n\tNo Product Found!!!\n");
+		printf("\n\tPlease try again...\n");
+		return;
 	}
-	saveToFile(products, filename);
+	
+	int choice;
+	
+    printf("\t======================================\n");
+    printf("\n\tWhat do you want to edit ?\n");
+    printf("\n\t[1] Name\n");
+    printf("\t[2] Category\n");
+    printf("\t[3] Quantity\n");
+    printf("\t[4] Unit Price\n");
+    printf("\t[5] All\n");
+    printf("\t[0] Exit\n");
+    printf("\n\t======================================\n");
+    
+	printf("\n\tEnter your choice (0-4): ");
+	scanf("%d", &choice);
+	
+	switch(choice) {
+		case 1:
+			editProductName(index);
+			break;
+		case 2:
+			editProductCategory(index);
+			break;
+		case 3:
+			editProductQuantity(index);
+			break;
+		case 4:
+			editProductUnitPrice(index);
+			break;
+		case 5:
+			editProductAll(index);
+			break;
+		case 0:
+			break;
+		default:
+			printf("\n\tInvalid input! Please enter a number between 0 and 6!!!\n");
+			break;
+	}
+	
 }
 //==============================End: Edit Product
 
@@ -289,36 +308,55 @@ void deleteProduct() {
 
 //==============================Start: Search Product
 
-void searchProduct() {
+void searchProductMenu() {
 	
-	printf("\n\t=== Search product ===\n");
+	int choice;
 	
-	printf("\n\tPlease input ID of Product: ");
+	printf("\n\t======================================\n");
+    printf("\t### Search Product Menu ###\n");
+    printf("\t======================================\n");
+    printf("\n\t[1] Search Product by Id\n");
+    printf("\t[2] Max Unit Price Product\n");
+    printf("\t[3] Min Unit Price Product\n");
+    printf("\t[4] Max Quantity Product\n");
+    printf("\t[5] Min Quantity Product\n");
+    printf("\t[6] Same Category Products\n");
+    printf("\t[0] Exit\n");
+    printf("\n\t======================================\n");
+    
+	printf("\n\tEnter your choice (0-6): ");
+	scanf("%d", &choice);
 	
-	char productIdToSearch[10];
-	scanf("%9s", productIdToSearch);
-	
-	int found = 0;
-	
-	for(int i = 0; i < numProducts; i++) {
-		if(strcmp(productIdToSearch, products[i].id) == 0) {
-			
-			found = 1;
-			
-			printf("\n\t%-10s  %-20s  %-20s  %-20s  %-20s\n", "ID", "Name", "Category", "Quantity", "Unit Price");
-			printf("\t=========================================================================================");
-			printf("\n\t%-10s  %-20s  %-20s  %-20d  $%-20.2f\n", products[i].id, products[i].name, products[i].category, products[i].quantity, products[i].unitPrice);
-			printf("\t=========================================================================================\n");
-			
+	switch(choice) {
+		case 1:
+			system("cls");
+			searchProductById();
 			break;
-		}
-	}
-	
-	if(found == 1) {
-		printf("\n\tProduct was found successfully!!!\n");
-	}
-	else {
-		printf("\n\tNo Product Found!!!\n");
+		case 2:
+			system("cls");
+			searchMaxUnitPriceProduct();
+			break;
+		case 3:
+			system("cls");
+			searchMinUnitPriceProduct();
+			break;
+		case 4:
+			system("cls");
+			searchMaxQuantityProduct();
+			break;
+		case 5:
+			system("cls");
+			searchMinQuantityProduct();
+			break;
+		case 6:
+			system("cls");
+			searchSameCategoryProduct();
+			break;
+		case 0:
+			break;
+		default:
+			printf("\n\tInvalid input! Please enter a number between 0 and 6!!!\n");
+			break;
 	}
 	
 }
@@ -327,31 +365,78 @@ void searchProduct() {
 
 
 
-
-
 //==============================Start: Sort Product
 
-void sortProduct() {
+void sortProductMenu() {
 	
-	printf("\n\t=== Sort product by Product's Name (Ascending Order) ===\n");
+	int choice;
 	
-	Product temp;
+	printf("\n\t======================================\n");
+    printf("\t### Sort Product Menu ###\n");
+    printf("\t======================================\n");
+    printf("\n\t[1] Sort Product by Id\n");
+    printf("\t[2] Sort Product by Name\n");
+    printf("\t[3] Sort Product by Category\n");
+    printf("\t[4] Sort Product by Quantity\n");
+    printf("\t[5] Sort Product by Unit Price\n");
+    printf("\t[0] Exit\n");
+    printf("\n\t======================================\n");
+    
+	printf("\n\tEnter your choice (0-5): ");
+	scanf("%d", &choice);
 	
-	for(int i = 0; i < numProducts - 1; i++) {
-		for(int j = i + 1; j < numProducts; j++) {
-			if(strcmp(products[j].name, products[i].name) < 0) {
-				temp = products[i];
-				products[i] = products[j];
-				products[j] = temp;
+	switch(choice) {
+		case 1:
+			if(sortSelection() == 1) {
+				sortProductByIdAscending();
+				break;
 			}
-		}
+			else {
+				sortProductByIdDescending();
+				break;
+			}
+		case 2:
+			if(sortSelection() == 1) {
+				sortProductByNameAscending();
+				break;
+			}
+			else {
+				sortProductByNameDescending();
+				break;
+			}
+		case 3:
+			if(sortSelection() == 1) {
+				sortProductByCategoryAscending();
+				break;
+			}
+			else {
+				sortProductByCategoryDescending();
+				break;
+			}
+		case 4:
+			if(sortSelection() == 1) {
+				sortProductByQuantityAscending();
+				break;
+			}
+			else {
+				sortProductByQuantityDescending();
+				break;
+			}
+		case 5:
+			if(sortSelection() == 1) {
+				sortProductByUnitPriceAscending();
+				break;
+			}
+			else {
+				sortProductByUnitPriceDescending();
+				break;
+			}
+		case 0:
+			break;
+		default:
+			printf("\n\tInvalid input! Please enter a number between 0 and 5!!!\n");
+			break;
 	}
-	
-	printf("\n\tProducts were sorted successfully!!!\n");
-	
-	saveToFile(products, filename);
-	
-	viewProduct();
 }
 
 //==============================End: Sort Product

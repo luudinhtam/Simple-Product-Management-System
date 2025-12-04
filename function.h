@@ -26,17 +26,68 @@ extern Product products[];
 
 extern int numProducts;
 
-//Function
+//ALL FUNCTIONS
 
+//Display the main menu
 void displayMenu();
 
+//View Function
 void viewProduct();
-void addProduct();
-void editProduct();
-void deleteProduct();
-void searchProduct();
-void sortProduct();
 
+//Add Function
+void addProduct();
+
+//Edit Function
+void editProductMenu();
+
+void editProductAll(int index);
+
+void editProductName(int index);
+
+void editProductCategory(int index);
+
+void editProductQuantity(int index);
+
+void editProductUnitPrice(int index);
+
+//Delete Function
+void deleteProduct();
+
+//Search Function
+void searchProductMenu();
+
+void searchProductById();
+
+void searchMaxUnitPriceProduct();
+void searchMinUnitPriceProduct();
+
+void searchMaxQuantityProduct();
+void searchMinQuantityProduct();
+
+void searchSameCategoryProduct();
+
+//Sort Function
+void sortProductMenu();
+
+int sortSelection();
+
+void sortProductByIdDescending();
+void sortProductByIdAscending();
+
+void sortProductByNameDescending();
+void sortProductByNameAscending();
+
+void sortProductByCategoryAscending();
+void sortProductByCategoryDescending();
+
+void sortProductByQuantityAscending();
+void sortProductByQuantityDescending();
+
+void sortProductByUnitPriceAscending();
+void sortProductByUnitPriceDescending();
+
+
+//Working with FILE
 void saveToFile(Product products[], const char *filename);
 int loadFromFile(Product products[], const char *filename);
 
