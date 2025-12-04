@@ -20,7 +20,11 @@ void editProductAll(int index) {
 		return;
 	}
 			
-	tempName[0] = toupper(tempName[0]);
+	for(int i = 0; i < strlen(tempName); i++) {
+		if(i == 0 || tempName[i - 1] == ' ') {
+			tempName[i] = toupper(tempName[i]);
+		}
+	}
 	strcpy(products[index].name, tempName);
 	
 	char tempCategory[1000];
@@ -41,7 +45,11 @@ void editProductAll(int index) {
 		return;
 	}
 			
-	tempCategory[0] = toupper(tempCategory[0]);
+	for(int i = 0; i < strlen(tempCategory); i++) {
+		if(i == 0 || tempCategory[i - 1] == ' ') {
+			tempCategory[i] = toupper(tempCategory[i]);
+		}
+	}
 	strcpy(products[index].category, tempCategory);
 	
 	printf("\n\tInput new Quantity (Old category: %d): ", products[index].quantity);
@@ -79,7 +87,11 @@ void editProductName(int index) {
 		return;
 	}
 			
-	tempName[0] = toupper(tempName[0]);
+	for(int i = 0; i < strlen(tempName); i++) {
+		if(i == 0 || tempName[i - 1] == ' ') {
+			tempName[i] = toupper(tempName[i]);
+		}
+	}
 	strcpy(products[index].name, tempName);
 	
 	saveToFile(products, filename);
@@ -110,7 +122,11 @@ void editProductCategory(int index) {
 		return;
 	}
 			
-	tempCategory[0] = toupper(tempCategory[0]);
+	for(int i = 0; i < strlen(tempCategory); i++) {
+		if(i == 0 || tempCategory[i - 1] == ' ') {
+			tempCategory[i] = toupper(tempCategory[i]);
+		}
+	}
 	strcpy(products[index].category, tempCategory);
 			
 	saveToFile(products, filename);

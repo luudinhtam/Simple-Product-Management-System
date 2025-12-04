@@ -169,8 +169,17 @@ void addProduct() {
 		return;
 	}
 	
-	tempName[0] = toupper(tempName[0]);
-	tempCategory[0] = toupper(tempCategory[0]);
+	for(int i = 0; i < strlen(tempName); i++) {
+		if(i == 0 || tempName[i - 1] == ' ') {
+			tempName[i] = toupper(tempName[i]);
+		}
+	}
+	
+	for(int i = 0; i < strlen(tempCategory); i++) {
+		if(i == 0 || tempCategory[i - 1] == ' ') {
+			tempCategory[i] = toupper(tempCategory[i]);
+		}
+	}
 	
 	strcpy(products[numProducts].id, tempId);
 	strcpy(products[numProducts].name, tempName);
